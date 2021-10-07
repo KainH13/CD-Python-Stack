@@ -1,4 +1,4 @@
-import deck
+from . import deck
 
 class Player:
 
