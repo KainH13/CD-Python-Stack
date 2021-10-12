@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground</title>
+</head>
+
+<style>
+    body {
+        margin: 0 auto;
+        width: 800px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    .box {
+        background-color: dodgerblue;
+        border: solid black;
+        width: 150px;
+        height: 150px;
+        margin: 20px;
+    }
+
+</style>
+
+<body>
+<h1>Welcome!</h1>
+<div class="container">
+    {% if x == None %}
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    {% elif x != None %}
+        {% for i in range(x) %}
+            {% if color != None %}
+                <div class="box" style="background-color: {{ color }};"></div>
+            {% else %}
+                <div class="box"></div>
+            {% endif %}
+            
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+
+</html>
