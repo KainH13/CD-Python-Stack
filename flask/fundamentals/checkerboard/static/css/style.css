@@ -1,0 +1,25 @@
+body {
+    margin: 0 auto;
+    padding: 0;
+    border: solid red;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.square {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: solid lightgray 2px;
+}
+
+.odd-square {
+    background-color: black;
+}
+
+.even-square {
+    background-color: red;
+}
