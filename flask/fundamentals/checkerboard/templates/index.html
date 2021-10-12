@@ -13,9 +13,9 @@
         <div class="odd-row row">
             {% for j in range(y) %}
                 {% if j == 0 or j % 2 == 0 %}
-                    <div class="odd-square square"></div>
+                    <div class="odd-square square" style="background-color: {{ color1 }};"></div>
                 {% else %}
-                    <div class="even-square square"></div>
+                    <div class="even-square square" style="background-color: {{ color2 }};"></div>
                 {% endif %}
             {% endfor %}
         </div>
@@ -23,9 +23,9 @@
         <div class="even-row row">
             {% for j in range(y) %}
                 {% if j == 0 or j % 2 == 0 %}
-                    <div class="even-square square"></div>
+                    <div class="even-square square" style="background-color: {{ color2 }};"></div>
                 {% else %}
-                    <div class="odd-square square"></div>
+                    <div class="odd-square square" style="background-color: {{ color1 }};"></div>
                 {% endif %}
             {% endfor %}
         </div>
