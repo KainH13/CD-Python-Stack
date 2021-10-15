@@ -8,10 +8,13 @@ app.secret_key = 'hello from a land down under!'
 
 @app.route('/')
 def index():
-    session['win'] == False
-    session['high_guess'] = False
-    session['low_guess'] = False
-    session['out_guess'] = False
+    # session['high_guess'] = False
+    # session['low_guess'] = False
+    # session['out_guess'] = False
+    print(f"win = {session['win']}")
+    # print(f"high guess = {session['high_guess']}")
+    # print(f"low guess = {session['low_guess']}")
+    # print(f"out guess = {session['out_guess']}")
     if session['win'] == True:
         session["num"] = random.randint(1,100)
         print(f"Created new random number {session['num']}")
@@ -27,6 +30,15 @@ def index():
 @app.route('/check_number', methods=['GET', 'POST'])
 def check_number():
     number = int(request.form['number'])
+    session['win'] = False
+    session['low_guess'] = False
+    session['high_guess'] = False
+
+    if 'guesses' in session:
+        session['guesses'] += 1
+    else:
+        session['guesses'] = 1
+
     if number == session['num']:
         print("We have a winner!")
         session['win'] = True

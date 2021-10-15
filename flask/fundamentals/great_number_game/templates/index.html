@@ -11,6 +11,25 @@
 <body>
     <h1 class="col-6 offset-3 text-center">Welcome to the Great Number Game</h1>
     <p class="col-6 offset-3 text-center">I am thinking of a number between 1 and 100</p>
+
+    {% if session['win'] == True %}
+        <div class="col-4 offset-4 text-center alert alert-success" role="alert">
+            <strong>Correct! You Won in {{ session['guesses'] }} guesses!</strong> A new number has been generated, feel free to play again.
+        </div>
+    {% elif session['high_guess'] == True %}
+        <div class="col-4 offset-4 text-center alert alert-warning" role="alert">
+            <strong>Too High!</strong>
+        </div>
+    {% elif session['low_guess'] == True %}
+        <div class="col-4 offset-4 text-center alert alert-warning" role="alert">
+            <strong>Too Low!</strong>
+        </div>
+    {% elif session['out_guess'] == True %}
+        <div class="col-4 offset-4 text-center alert alert-danger" role="alert">
+            <strong>Guess not between 1 and 100!</strong>
+        </div>
+    {% endif %}
+
     <p class="col-6 offset-3 text-center">Take a guess!</p>
     <form class="col-6 offset-3 text-center" action="/check_number" method="post">
         <label for="number">Choose a number (1-100):</label>
