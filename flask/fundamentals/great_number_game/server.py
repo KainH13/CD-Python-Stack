@@ -11,6 +11,10 @@ def index():
     # session['high_guess'] = False
     # session['low_guess'] = False
     # session['out_guess'] = False
+    if 'win' in session:
+        pass
+    else:
+        session['win'] = False
     print(f"win = {session['win']}")
     # print(f"high guess = {session['high_guess']}")
     # print(f"low guess = {session['low_guess']}")
