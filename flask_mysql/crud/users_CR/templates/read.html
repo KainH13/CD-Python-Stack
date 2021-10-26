@@ -25,21 +25,17 @@
             </tr>
         </thead>
         <tbody>
+            {% for user in users %}
             <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>j@g.com</td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>t@g.com</td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="/user_creation">Create</a>
+    <a class="btn btn-primary" href="/users/new">Create</a>
 </body>
 
 </html>
