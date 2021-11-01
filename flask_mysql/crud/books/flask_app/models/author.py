@@ -31,17 +31,21 @@ class Author:
     # incomplete -- will not work
     @classmethod
     def get_author_with_books(cls, data):
-        query = "SELECT * FROM authors LEFT JOIN books ON books.author_id = authors.id WHERE authors.id = %(id)s"
+        query = "SELECT * FROM authors LEFT JOIN favorites on favorites.author_id = authors.id LEFT JOIN books on books.id = favorites.book_id WHERE authors.id = %(id)s;"
         results = connectToMySQL(cls.db).query_db(query, data)
         author = cls(results[0])
         for row_from_db in results:
             book_data = {
                 "id": row_from_db["books.id"],
-                "first_name": row_from_db["first_name"],
-                "last_name": row_from_db["last_name"],
+                "title": row_from_db["title"],
                 "created_at": row_from_db["books.created_at"],
                 "updated_at": row_from_db["books.updated_at"],
-                "age": row_from_db["age"]
+                "num_of_pages": row_from_db["num_of_pages"]
             }
             author.books.append( book.Book(book_data))
         return author
+
+    @classmethod
+    def add_favorite(cls, data):
+        query = "INSERT INTO favorites (book_id, author_id) VALUES(%(book_id)s, %(author_id)s);"
+        return connectToMySQL(cls.db).query_db(query, data)

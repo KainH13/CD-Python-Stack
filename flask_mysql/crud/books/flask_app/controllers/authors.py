@@ -2,6 +2,7 @@
 from flask_app import app
 from flask import render_template, redirect, request
 from flask_app.models.author import Author
+from flask_app.models.book import Book
 
 @app.route('/authors')
 def authors_page():
@@ -22,5 +23,15 @@ def show_author(id):
     data = {
         "id": id
     }
-    author = Author.get_author_with_ninjas(data)
-    return render_template('author_show.html', author=author)
+    author = Author.get_author_with_books(data)
+    books = Book.get_all()
+    return render_template('author_show.html', author=author, books = books)
+
+@app.route('/authors/author/add_favorite', methods=["POST"])
+def add_favorite():
+    data = {
+        "book_id": request.form["book_id"],
+        "author_id": request.form["author_id"]
+    }
+    Author.add_favorite(data)
+    return redirect(f'/authors/{request.form["author_id"]}')
