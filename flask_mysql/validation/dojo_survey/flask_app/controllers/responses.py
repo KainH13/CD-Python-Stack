@@ -15,6 +15,10 @@ def log_data():
         "comment": request.form["comments"]
     }
 
+    # validations
+    if not Response.validate_response(request.form):
+        return redirect('/')
+
     Response.create(data)
 
     print("entered submit function")
