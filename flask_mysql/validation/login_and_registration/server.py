@@ -1,5 +1,5 @@
 from flask_app import app
-# add from flask_app.controllers import controllers
+from flask_app.controllers import users
 
 if __name__ == "__main__":
     app.run(debug=True)
