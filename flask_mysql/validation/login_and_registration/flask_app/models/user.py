@@ -62,4 +62,19 @@ class User:
         if user['password'] != user['confirm_password']:
             flash("Passwords did not match.", "registration_error")
             is_valid = False
+
+        # Checking password security    
+        password_secure = False
+        for x in user['password']:
+            print(x)
+            print(f"character is upper: {x.isupper()}")
+            print(f"character is digit: {x.isdigit()}")
+            if x.isupper():
+                password_secure = True
+            if x.isdigit():
+                password_secure = True
+        if not password_secure:
+            flash("Password must contain at least one uppercase letter and number.", "registration_error")
+            is_valid = False
+
         return is_valid
