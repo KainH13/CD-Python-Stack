@@ -17,6 +17,15 @@
     <div class="row">
         <div class="col card col-5 bg-dark">
             <h2 class="text-primary">Register</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == "registration_error" %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <form action="/user/register" method="POST">
                 <div class="form-group d-flex flex-column mb-3">
                     <label class="text-light" for="first_name">First Name:</label>
@@ -43,7 +52,16 @@
         </div>
         <div class="col card col-5 offset-2 bg-dark">
             <h2 class="text-success">Login</h2>
-            <form action="/user/register" method="POST">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == "login_error" %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/user/login" method="POST">
                 <div class="form-group d-flex flex-column mb-3">
                     <label class="text-light" for="email">Email:</label>
                     <input class="form-control" type="email" name="email">
