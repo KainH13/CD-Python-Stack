@@ -44,11 +44,14 @@ def login():
 
 @app.route('/success')
 def success_page():
-    data = {
-        "id": session['user_id']
-    }
-    user = User.get_user_by_id(data)
-    return render_template('success.html', user=user)
+    try:
+        data = {
+            "id": session['user_id']
+        }
+        user = User.get_user_by_id(data)
+        return render_template('success.html', user=user)
+    except KeyError:
+        return redirect('/')
 
 @app.route('/user/logout')
 def logout():
