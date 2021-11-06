@@ -13,6 +13,13 @@ class Recipe:
         self.date_made = data['date_made']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.likes = 0
+
+    def get_likes(self):
+        query = f"SELECT * FROM recipes LEFT JOIN likes ON recipes_id = recipes.id LEFT JOIN users ON users.id = likes.users_id WHERE recipes.id = {self.id}"
+        results = connectToMySQL('recipes_db').query_db(query)
+        self.likes = len(results)
+        return self
 
     @classmethod
     def create(cls, data):
@@ -26,7 +33,7 @@ class Recipe:
     
     @classmethod
     def get_by_id(cls, data):
-        query = "SELECT * FROM recipes WHERE id = %(id)s"
+        query = "SELECT * FROM recipes WHERE id = %(id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     @classmethod
@@ -36,5 +43,11 @@ class Recipe:
 
     @classmethod
     def delete(cls, data):
-        query = "DELETE FROM recipes WHERE id = %(id)s"
+        query = "DELETE FROM recipes WHERE id = %(id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
+
+    @classmethod
+    def add_like(cls, data):
+        query = "INSERT INTO likes (users_id, recipes_id) VALUES(%(users_id)s, %(recipes_id)s)"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    

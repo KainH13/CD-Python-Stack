@@ -100,3 +100,33 @@ def recipe_details_page(id):
     user = User.get_user_by_id(user_data)[0]
     recipe = Recipe.get_by_id(data)[0]
     return render_template('recipe.html', recipe=recipe, user=user)
+
+@app.route('/recipes/all')
+def all_recipes_page():
+    # check for login
+    if 'user_id' not in session:
+        return redirect('user/logout')
+
+    all_recipes = Recipe.get_all()
+    recipes = []
+    for recipe in all_recipes:
+        recipe = Recipe(recipe)
+        recipe.get_likes()
+        recipes.append(recipe)
+    print(recipes)
+
+    return render_template('all_recipes.html', recipes=recipes)
+
+@app.route('/recipes/<int:id>/like')
+def like_recipe(id):
+    # check for login
+    if 'user_id' not in session:
+        return redirect('user/logout')
+
+    recipe = Recipe.get_by_id(data={"id": id})
+    data = {
+        "users_id": session['user_id'],
+        "recipes_id": id
+    }
+    Recipe.add_like(data)
+    return redirect('/recipes/all')
