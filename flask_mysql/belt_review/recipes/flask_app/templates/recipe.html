@@ -17,28 +17,27 @@
     <div class="row align-items-center">
         <h1 class="col-4">Welcome {{ user.first_name }}!</h1>
         <div class="col-2 offset-6 d-flex justify-content-end">
-            <a class="btn btn-success m-2" href="/create">Create</a>
+            <a class="btn btn-primary m-2" href="/dashboard">Dashboard</a>
             <a class="btn btn-danger m-2" href="/user/logout">Logout</a>
         </div>
     </div>
     <div class="card">
-        <h2 class="card-title">Pumpkin Pie</h2>
+        <h2 class="card-title">{{ recipe.name }}</h2>
         <div class="row">
             <p class="col-4">Description:</p>
-            <p class="col-8">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </p>
+            <p class="col-8">{{ recipe.description }}</p>
         </div>
         <div class="row">
             <p class="col-4">Under 30 minutes:</p>
-            <p class="col-8" >No</p>
+            <p class="col-8" >{{ recipe.under_30 }}</p>
         </div>
         <div class="row">
             <p class="col-4">Instructions:</p>
-            <p class="col-8">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero esse ullam ipsa pariatur? Perspiciatis eius, obcaecati corrupti voluptas omnis laudantium optio fugiat nihil, eaque eum vitae officiis praesentium pariatur. Natus.</p>
+            <p class="col-8">{{ recipe.instructions }}</p>
         </div>
         <div class="row">
             <p class="col-4">Date Made:</p>
-            <p class="col-8">January 4th, 2001</p>
+            <p class="col-8">{{ recipe.date_made }}</p>
         </div>
     </div>
 

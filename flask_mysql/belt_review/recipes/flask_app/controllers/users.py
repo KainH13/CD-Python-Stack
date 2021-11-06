@@ -25,7 +25,7 @@ def register_user():
     user_id = User.create(data)
     session['user_id'] = user_id
 
-    return redirect('/success')
+    return redirect('/dashboard')
 
 @app.route('/user/login', methods=['POST'])
 def login():

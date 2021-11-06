@@ -17,8 +17,8 @@
     <div class="row align-items-center">
         <h1 class="col-4">Welcome {{ user.first_name }}!</h1>
         <div class="col-2 offset-6 d-flex justify-content-end">
-            <a class="btn btn-success" href="/create">Create</a>
-            <a class="btn btn-danger" href="/user/logout">Logout</a>
+            <a class="btn btn-success m-2" href="/recipes/new">Create</a>
+            <a class="btn btn-danger m-2" href="/user/logout">Logout</a>
         </div>
     </div>
     <h4>These are the recipes</h4>
@@ -31,33 +31,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Pumpkin Pie</td>
-                <td>No</td>
-                <td>
-                    <a class="btn btn-warning" href="#">View Instructions</a>
-                    <a class="btn btn-primary" href="#">Edit</a>
-                    <a class="btn btn-danger" href="#">Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Pumpkin Pie</td>
-                <td>No</td>
-                <td>
-                    <a class="btn btn-warning" href="#">View Instructions</a>
-                    <a class="btn btn-primary" href="#">Edit</a>
-                    <a class="btn btn-danger" href="#">Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Pumpkin Pie</td>
-                <td>No</td>
-                <td>
-                    <a class="btn btn-warning" href="#">View Instructions</a>
-                    <a class="btn btn-primary" href="#">Edit</a>
-                    <a class="btn btn-danger" href="#">Delete</a>
-                </td>
-            </tr>
+            {% for recipe in user.recipes %}
+                <tr>
+                    <td>{{ recipe.name }}</td>
+                    <td>{{ recipe.under_30 }}</td>
+                    <td>
+                        <a class="btn btn-warning" href="/recipes/{{ recipe.id }}">View Instructions</a>
+                        <a class="btn btn-primary" href="/recipes/edit/{{ recipe.id }}">Edit</a>
+                        <a class="btn btn-danger" href="/recipes/delete/{{ recipe.id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
