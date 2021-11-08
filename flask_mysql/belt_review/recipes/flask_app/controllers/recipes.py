@@ -28,6 +28,9 @@ def save_recipe():
     # check for login
     if 'user_id' not in session:
         return redirect('user/logout')
+    
+    if not Recipe.validate_recipe(request.form):
+        return redirect(f'/recipes/new')
 
     data = {
         "users_id": session['user_id'],
@@ -37,7 +40,7 @@ def save_recipe():
         "date_made": request.form["date_made"],
         "under_30": request.form["under_30"]
     }
-    recipe_id = Recipe.create(data)
+    Recipe.create(data)
     return redirect('/dashboard')
 
 @app.route('/recipes/delete/<int:id>')
@@ -70,6 +73,9 @@ def save_edit(id):
     # check for login
     if 'user_id' not in session:
         return redirect('user/logout')
+    
+    if not Recipe.validate_recipe(request.form):
+        return redirect(f'/recipes/edit/{id}')
 
     data = {
         "id": id,
@@ -80,6 +86,7 @@ def save_edit(id):
         "date_made": request.form["date_made"],
         "under_30": request.form["under_30"]
     }
+
     Recipe.update(data)
     return redirect('/dashboard')
 

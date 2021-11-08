@@ -21,6 +21,15 @@
             <a class="btn btn-danger m-2" href="/user/logout">Logout</a>
         </div>
     </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == "recipe" %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <form class="row" action="/recipes/edit/{{ recipe.id }}/save" method="POST">
         <div class="col">
             <div class="form-group d-flex flex-column mb-3">

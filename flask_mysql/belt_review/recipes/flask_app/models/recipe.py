@@ -78,3 +78,16 @@ class Recipe:
     def remove_like(cls, data):
         query = "DELETE FROM likes WHERE users_id = %(users_id)s AND recipes_id = %(recipes_id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
+
+    @staticmethod
+    def validate_recipe(data):
+        is_valid = True
+        
+        if len(data['name']) < 3 or len(data['description']) < 3 or len(data['instructions']) < 3:
+            flash("Name, description, and instructions must be longer than 3 characters", "recipe")
+            is_valid = False
+        if 'date_made' not in data or 'under_30' not in data:
+            flash("Date Made and Under 30 Minutes? must be filled out.", "recipe")
+            is_valid = False
+        
+        return is_valid
