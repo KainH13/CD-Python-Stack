@@ -35,11 +35,15 @@
             {% for recipe in recipes %}
                 <tr>
                     <td>{{ recipe.name }}</td>
-                    <td>{{ recipe.likes }}</td>
+                    <td>{{ recipe.num_likes }}</td>
                     <td>{{ recipe.under_30 }}</td>
                     <td>
                         <a class="btn btn-warning" href="/recipes/{{ recipe.id }}">View Instructions</a>
+                        {% if recipe.id in liked_recipes %}
+                        <a class="btn btn-outline-primary" href="/recipes/{{ recipe.id }}/unlike">Unlike</a>
+                        {% else %}
                         <a class="btn btn-primary" href="/recipes/{{ recipe.id }}/like">Like</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

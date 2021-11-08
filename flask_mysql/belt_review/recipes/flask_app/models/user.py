@@ -17,6 +17,7 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.recipes = []
+        self.liked_recipes = []
 
     @classmethod
     def create(cls, data):
@@ -63,6 +64,30 @@ class User:
             }
             user.recipes.append(recipe.Recipe(recipe_data))
         return user
+
+    @classmethod
+    def get_user_with_liked_recipes(cls, data):
+        query = "SELECT * FROM users LEFT JOIN likes ON likes.users_id = users.id LEFT JOIN recipes ON recipes.id = likes.recipes_id WHERE users.id = %(id)s"
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        user = cls(results[0])
+
+        # check that there is at least 1 like
+        if results[0]['likes.id'] != None:
+            for row in results:
+                recipe_data = {
+                    "id" : row['recipes.id'],
+                    "name" : row['name'],
+                    "under_30" : row['under_30'],
+                    "description" : row['description'],
+                    "instructions" : row['instructions'],
+                    "date_made": row['date_made'],
+                    "created_at" : row['recipes.created_at'],
+                    "updated_at" : row['recipes.updated_at']
+                }
+                user.liked_recipes.append(recipe.Recipe(recipe_data))
+            return user
+        else:
+            return user
 
     @staticmethod
     def validate_registration(user, used_emails):

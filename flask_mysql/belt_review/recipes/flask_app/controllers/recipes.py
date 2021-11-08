@@ -1,4 +1,3 @@
-from werkzeug import datastructures
 from flask_app import app
 from flask import render_template, redirect, request, session, flash
 from flask_app.models.user import User
@@ -107,15 +106,26 @@ def all_recipes_page():
     if 'user_id' not in session:
         return redirect('user/logout')
 
+    # get likes per recipe
     all_recipes = Recipe.get_all()
     recipes = []
     for recipe in all_recipes:
-        recipe = Recipe(recipe)
-        recipe.get_likes()
-        recipes.append(recipe)
-    print(recipes)
+        data = {
+            "id": recipe['id']
+        }
+        recipes.append(Recipe.get_recipe_with_likes(data))
 
-    return render_template('all_recipes.html', recipes=recipes)
+    # get all recipes liked by user -- for validating that users only like recipes once
+    user = User.get_user_with_liked_recipes(data = {"id": session['user_id']})
+    print(user.liked_recipes)
+
+    # get recipe ids the user has liked
+    liked_recipes = []
+    for recipe in user.liked_recipes:
+        liked_recipes.append(recipe.id)
+    print(liked_recipes)
+
+    return render_template('all_recipes.html', recipes=recipes, liked_recipes=liked_recipes)
 
 @app.route('/recipes/<int:id>/like')
 def like_recipe(id):
@@ -123,10 +133,22 @@ def like_recipe(id):
     if 'user_id' not in session:
         return redirect('user/logout')
 
-    recipe = Recipe.get_by_id(data={"id": id})
     data = {
         "users_id": session['user_id'],
         "recipes_id": id
     }
     Recipe.add_like(data)
+    return redirect('/recipes/all')
+
+@app.route('/recipes/<int:id>/unlike')
+def unlike_recipe(id):
+    # check for login
+    if 'user_id' not in session:
+        return redirect('user/logout')
+
+    data = {
+        "users_id": session['user_id'],
+        "recipes_id": id
+    }
+    Recipe.remove_like(data)
     return redirect('/recipes/all')
