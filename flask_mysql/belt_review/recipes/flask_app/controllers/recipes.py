@@ -64,7 +64,7 @@ def edit_recipe_page(id):
     data = {
         "id": id
     }
-    recipe = Recipe.get_by_id(data)[0]
+    recipe = Recipe.get_by_id(data)
     print(recipe)
     return render_template('edit_recipe.html', recipe=recipe)
 
@@ -103,9 +103,8 @@ def recipe_details_page(id):
         "id": session['user_id']
     }
 
-    user = User.get_user_by_id(user_data)[0]
-    recipe = Recipe.get_by_id(data)[0]
-    return render_template('recipe.html', recipe=recipe, user=user)
+    recipe = Recipe.get_by_id(data)
+    return render_template('recipe.html', recipe=recipe)
 
 @app.route('/recipes/all')
 def all_recipes_page():
@@ -118,7 +117,7 @@ def all_recipes_page():
     recipes = []
     for recipe in all_recipes:
         data = {
-            "id": recipe['id']
+            "id": recipe.id
         }
         recipes.append(Recipe.get_recipe_with_likes(data))
 

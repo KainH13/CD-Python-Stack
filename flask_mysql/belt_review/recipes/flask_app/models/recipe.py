@@ -32,12 +32,17 @@ class Recipe:
     @classmethod
     def get_all(cls):
         query = "SELECT * FROM recipes;"
-        return connectToMySQL(cls.db_name).query_db(query)
+        results = connectToMySQL(cls.db_name).query_db(query)
+        recipes = []
+        for row in results:
+            recipes.append(cls(row))
+        return recipes
     
     @classmethod
     def get_by_id(cls, data):
         query = "SELECT * FROM recipes WHERE id = %(id)s;"
-        return connectToMySQL(cls.db_name).query_db(query, data)
+        result = connectToMySQL(cls.db_name).query_db(query, data)
+        return cls(result[0])
 
     @classmethod
     def get_recipe_with_likes(cls, data):

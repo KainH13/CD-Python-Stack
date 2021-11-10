@@ -15,7 +15,7 @@
 
 <body class="col-10 offset-1">
     <div class="row align-items-center">
-        <h1 class="col-4">Welcome {{ user.first_name }}!</h1>
+        <h1 class="col-4">Recipe</h1>
         <div class="nav col-4 offset-4 d-flex justify-content-end">
             <a class="nav-link m-2" href="/dashboard">Dashboard</a>
             <a class="nav-link m-2" href="/recipes/new">Create</a>
@@ -23,7 +23,7 @@
             <a class="nav-link m-2" href="/user/logout">Logout</a>
         </div>
     </div>
-    <div class="card">
+    <div class="card p-2">
         <h2 class="card-title">{{ recipe.name }}</h2>
         <div class="row">
             <p class="col-4">Description:</p>
