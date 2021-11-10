@@ -16,9 +16,11 @@
 <body class="col-10 offset-1">
     <div class="row align-items-center">
         <h1 class="col-4">Add New Recipe</h1>
-        <div class="col-2 offset-6 d-flex justify-content-end">
-            <a class="btn btn-primary m-2" href="/dashboard">Dashboard</a>
-            <a class="btn btn-danger m-2" href="/user/logout">Logout</a>
+        <div class="nav col-4 offset-4 d-flex justify-content-end">
+            <a class="nav-link m-2" href="/dashboard">Dashboard</a>
+            <a class="nav-link disabled m-2" href="/recipes/new">Create</a>
+            <a class="nav-link m-2" href="/recipes/all">Recipe Board</a>
+            <a class="nav-link m-2" href="/user/logout">Logout</a>
         </div>
     </div>
     {% with messages = get_flashed_messages(with_categories=true) %}

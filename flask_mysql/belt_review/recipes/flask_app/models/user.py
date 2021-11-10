@@ -19,11 +19,13 @@ class User:
         self.recipes = []
         self.liked_recipes = []
 
+    # Create
     @classmethod
     def create(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES(%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
+    # Read
     @classmethod
     def get_user_by_id(cls, data):
         query = "SELECT * FROM users WHERE id = %(id)s"
@@ -64,7 +66,9 @@ class User:
             }
             user.recipes.append(recipe.Recipe(recipe_data))
         return user
+    
 
+    # Validate
     @classmethod
     def get_user_with_liked_recipes(cls, data):
         query = "SELECT * FROM users LEFT JOIN likes ON likes.users_id = users.id LEFT JOIN recipes ON recipes.id = likes.recipes_id WHERE users.id = %(id)s"

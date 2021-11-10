@@ -7,7 +7,7 @@ from flask_app.models.recipe import Recipe
 def dashboard_page():
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     data = {
             "id": session['user_id']
@@ -19,7 +19,7 @@ def dashboard_page():
 def new_recipe_page():
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     return render_template('add_recipe.html', user_id=session['user_id'])
 
@@ -27,7 +27,7 @@ def new_recipe_page():
 def save_recipe():
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
     
     if not Recipe.validate_recipe(request.form):
         return redirect(f'/recipes/new')
@@ -47,7 +47,7 @@ def save_recipe():
 def delete_recipe(id):
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     data = {
         "id": id
@@ -59,7 +59,7 @@ def delete_recipe(id):
 def edit_recipe_page(id):
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     data = {
         "id": id
@@ -72,7 +72,7 @@ def edit_recipe_page(id):
 def save_edit(id):
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
     
     if not Recipe.validate_recipe(request.form):
         return redirect(f'/recipes/edit/{id}')
@@ -94,7 +94,7 @@ def save_edit(id):
 def recipe_details_page(id):
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     data = {
         "id": id
@@ -111,7 +111,7 @@ def recipe_details_page(id):
 def all_recipes_page():
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     # get likes per recipe
     all_recipes = Recipe.get_all()
@@ -138,7 +138,7 @@ def all_recipes_page():
 def like_recipe(id):
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     data = {
         "users_id": session['user_id'],
@@ -151,7 +151,7 @@ def like_recipe(id):
 def unlike_recipe(id):
     # check for login
     if 'user_id' not in session:
-        return redirect('user/logout')
+        return redirect('/user/logout')
 
     data = {
         "users_id": session['user_id'],

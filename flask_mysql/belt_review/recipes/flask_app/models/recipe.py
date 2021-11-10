@@ -17,11 +17,18 @@ class Recipe:
         self.likes = []
         self.num_likes = 0
 
+    # Create
     @classmethod
     def create(cls, data):
         query = "INSERT INTO recipes (name, under_30, description, instructions, date_made, users_id) VALUES(%(name)s, %(under_30)s, %(description)s, %(instructions)s, %(date_made)s, %(users_id)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
+    @classmethod
+    def add_like(cls, data):
+        query = "INSERT INTO likes (users_id, recipes_id) VALUES(%(users_id)s, %(recipes_id)s);"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+
+    # Read
     @classmethod
     def get_all(cls):
         query = "SELECT * FROM recipes;"
@@ -30,16 +37,6 @@ class Recipe:
     @classmethod
     def get_by_id(cls, data):
         query = "SELECT * FROM recipes WHERE id = %(id)s;"
-        return connectToMySQL(cls.db_name).query_db(query, data)
-
-    @classmethod
-    def update(cls, data):
-        query = "UPDATE recipes SET name = %(name)s, under_30 = %(under_30)s, description = %(description)s, instructions = %(instructions)s, date_made = %(date_made)s WHERE recipes.id = %(id)s;"
-        return connectToMySQL(cls.db_name).query_db(query, data)
-
-    @classmethod
-    def delete(cls, data):
-        query = "DELETE FROM recipes WHERE id = %(id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     @classmethod
@@ -69,16 +66,24 @@ class Recipe:
         else:
             return recipe
 
+    # Update
     @classmethod
-    def add_like(cls, data):
-        query = "INSERT INTO likes (users_id, recipes_id) VALUES(%(users_id)s, %(recipes_id)s)"
+    def update(cls, data):
+        query = "UPDATE recipes SET name = %(name)s, under_30 = %(under_30)s, description = %(description)s, instructions = %(instructions)s, date_made = %(date_made)s WHERE recipes.id = %(id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
-    
+
+    # Delete
+    @classmethod
+    def delete(cls, data):
+        query = "DELETE FROM recipes WHERE id = %(id)s;"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+
     @classmethod
     def remove_like(cls, data):
         query = "DELETE FROM likes WHERE users_id = %(users_id)s AND recipes_id = %(recipes_id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
+    # Validate
     @staticmethod
     def validate_recipe(data):
         is_valid = True

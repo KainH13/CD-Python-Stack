@@ -6,6 +6,9 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def login_registration_page():
+    if 'user_id' in session:
+        return redirect('/dashboard')
+
     return render_template('login_registration.html')
 
 @app.route('/user/register', methods=["POST"])
