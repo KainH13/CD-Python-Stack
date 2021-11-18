@@ -68,8 +68,6 @@ class User:
             user.recipes.append(recipe.Recipe(recipe_data))
         return user
     
-
-    # Validate
     @classmethod
     def get_user_with_liked_recipes(cls, data):
         query = "SELECT * FROM users LEFT JOIN likes ON likes.users_id = users.id LEFT JOIN recipes ON recipes.id = likes.recipes_id WHERE users.id = %(id)s"
@@ -94,14 +92,16 @@ class User:
         else:
             return user
 
+
+    # Validate
     @staticmethod
     def validate_registration(user, used_emails):
         is_valid = True
 
-        if len(user['first_name']) < 2 or not user['first_name'].isalpha():
+        if len(user['first_name']) < 2:
             flash("First Name must be at least 2 characters and contain only letters.", "registration_error")
             is_valid = False
-        if len(user['last_name']) < 2 or not user['last_name'].isalpha():
+        if len(user['last_name']) < 2:
             flash("Last Name must be at least 2 characters and contain only letters.", "registration_error")
             is_valid = False
         if not EMAIL_REGEX.match(user['email']):
@@ -128,11 +128,4 @@ class User:
             flash("Password must contain at least one uppercase letter and number.", "registration_error")
             is_valid = False
 
-        return is_valid
-
-    @staticmethod
-    def validate_login(data):
-        is_valid = True
-        query = "SELECT * FROM users WHERE email = %(email)s;"
-        results = connectToMySQL(User.db_name).query_db(query, data)
         return is_valid

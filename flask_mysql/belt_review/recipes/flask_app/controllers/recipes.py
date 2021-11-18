@@ -2,6 +2,7 @@ from flask_app import app
 from flask import render_template, redirect, request, session, flash
 from flask_app.models.user import User
 from flask_app.models.recipe import Recipe
+import datetime
 
 @app.route('/dashboard')
 def dashboard_page():
@@ -14,7 +15,7 @@ def dashboard_page():
         }
     user = User.get_user_with_recipes(data)
     return render_template('dashboard.html', user=user)
-
+    
 @app.route('/recipes/new')
 def new_recipe_page():
     # check for login
@@ -65,7 +66,6 @@ def edit_recipe_page(id):
         "id": id
     }
     recipe = Recipe.get_by_id(data)
-    print(recipe)
     return render_template('edit_recipe.html', recipe=recipe)
 
 @app.route('/recipes/edit/<int:id>/save', methods=['POST'])
@@ -96,14 +96,8 @@ def recipe_details_page(id):
     if 'user_id' not in session:
         return redirect('/user/logout')
 
-    data = {
-        "id": id
-    }
-    user_data = {
-        "id": session['user_id']
-    }
-
-    recipe = Recipe.get_by_id(data)
+    recipe = Recipe.get_by_id({"id" : id})
+    recipe.date_made = recipe.date_made.strftime("%B %d %Y")
     return render_template('recipe.html', recipe=recipe)
 
 @app.route('/recipes/all')
@@ -123,13 +117,11 @@ def all_recipes_page():
 
     # get all recipes liked by user -- for validating that users only like recipes once
     user = User.get_user_with_liked_recipes(data = {"id": session['user_id']})
-    print(user.liked_recipes)
 
     # get recipe ids the user has liked
     liked_recipes = []
     for recipe in user.liked_recipes:
         liked_recipes.append(recipe.id)
-    print(liked_recipes)
 
     return render_template('all_recipes.html', recipes=recipes, liked_recipes=liked_recipes)
 
